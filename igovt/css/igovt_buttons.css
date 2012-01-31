@@ -1,0 +1,187 @@
+div.igovtPopupButtonContainer {
+	/* 
+	 * Outermost container for button + link + popups.
+	 * No styles are specifically defined for this container.
+	 * This class serves as a way to silo the popup buttons from
+	 * the rest of the document.  By using very specific selectors
+	 * we stop css styles from bleeding over in either direction.
+	 */
+    margin: 20px;
+    width: 149px;
+}
+
+div.igovtPopupButtonContainer a {
+	color: #333333; 
+	font: bold .7em arial,verdana;
+}
+
+div.igovtPopupButtonContainer a,
+div.igovtPopupButtonContainer img {
+	border: 0;
+}
+
+/*
+ * CSS for the igovt logon service hover graphics
+ */
+div.igovtPopupButtonContainer div.hasIgovtPopup a { /* Default settings for a link */
+    font-size: 8pt;
+	font-weight: bold;
+    display: block;
+}
+
+/* Define a style for hovered links */
+/* This is the default igovt style */
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover {
+    color: #858505;
+}
+
+/* Always visible part, wraps button and link */
+div.igovtPopupButtonContainer div.hasIgovtPopup {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 149px;
+}
+
+/* Hide the popups when not moused over */
+div.igovtPopupButtonContainer div.hasIgovtPopup span { display: none; }
+
+/*
+ * Show the popups on mouse-over.
+ * z-index is used to ensure that the popup balloons appear on top
+ * of other elements on the page.
+ * 
+ * This may not work as expected in IE 6/7, which will treat each div.hasIgovtPopup
+ * as a separate stacking context.  This difference in the way z-index is interpreted in
+ * these older browsers mean that it may not be possible to get correct behaviour in both
+ * older and modern browsers (e.g. FF 3.x, IE 8) when igovt buttons appear close
+ * together in a page.
+ */
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span {
+    color: #000;
+    position: absolute;
+    padding-right: .5em;
+    display: inline-block; 
+	z-index: 1000;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover {
+	height: auto;
+}
+
+/*
+ * The actual popups.  All images used here have the same height and width,
+ * but the positions are different.
+ */
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span.popup {
+	height: 95px;  /* height of the hover image - needs to match image for best image quality */
+	width: 273px;  /* width of the hover image - needs to match image for best image quality */
+	text-decoration: none;
+}
+
+/* Each version of the popup uses a different image in a different position */
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span.showInfoBtnLeftUp {
+    background: transparent url(../images/left-top-descript-rec.gif) no-repeat 0 0; /* hover image (without text) */
+    top: -96px;  /* determines vertical position of hover image relative to element having this style */  
+    right: -6px; /* determines horizontal position of hover image relative to element having this style */    
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span.showInfoLinkLeftDown {
+    background: transparent url(../images/left-bot-descript-rec.gif) no-repeat 0 0; 
+    top: 17px;
+    right: -6px;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span.showInfoLinkLeft {
+    background: transparent url(../images/left-side-descript-rec.gif) no-repeat 0 0; 
+    top: -50px;
+    right: 145px;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span.showInfoBtnRightUp {
+    background: transparent url(../images/right-top-descript-rec.gif) no-repeat 0 0; 
+    top: -96px;   
+    left: 0;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span.showInfoLinkRightDown {
+    background: transparent url(../images/right-bot-descript-rec.gif) no-repeat 0 0; 
+    top: 17px;
+    left: 0;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span.showInfoLinkRight {
+    background: transparent url(../images/right-side-descript-rec.gif) no-repeat 0 0; 
+    top: -50px;
+    left: 150px;
+}
+
+/* General characteristics of the popup text container */
+div.igovtPopupButtonContainer div.hasIgovtPopup a:hover span span {
+    color: #333333;
+    display: inline-block;
+    text-align: left;
+    font-weight: normal;
+    font-size: 8pt;  /* this determines the actual size of the text inside the hover image for most browsers */
+}
+
+/*
+ * Each popup has the text positioned differently because of the position of the arrow.
+ * We use positioning of the text box rather than margins or padding to work around box-model
+ * differences in IE/Firefox.
+ */
+div.igovtPopupButtonContainer div.hasIgovtPopup span.showInfoBtnLeftUp span {
+    left: 7px;
+	right: 7px;
+    top: 35px;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup span.showInfoLinkLeftDown span {
+    left: 7px;
+	right: 7px;
+    top: 48px;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup span.showInfoLinkLeft span {
+    left: 7px;
+	right: 21px;
+    top: 35px;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup span.showInfoBtnRightUp span {
+    left: 7px;
+	right: 7px;
+    top: 35px;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup span.showInfoLinkRightDown span {
+    left: 7px;
+	right: 7px;
+    top: 48px;
+}
+
+div.igovtPopupButtonContainer div.hasIgovtPopup span.showInfoLinkRight span {
+    left: 21px;
+	right: 7px;
+    top: 35px;
+}
+
+/*
+ * Styles to position the link relative to the button
+ */
+div.igovtPopupButtonContainer div.onRightStdBtn { 
+    text-align: right;
+    width: 149px;
+	padding-top: 3px;
+}
+
+div.igovtPopupButtonContainer div.onLeftStdBtn { 
+    text-align: left;
+    margin-left: 2px;
+    width: 149px;
+	padding-top: 3px;
+}
+
+.center {
+   text-align: center;
+}

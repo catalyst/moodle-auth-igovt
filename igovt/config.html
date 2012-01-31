@@ -1,0 +1,133 @@
+<?php
+/**
+ * @author Erlend Strømsvik - Ny Media AS
+ * @author Piers Harding - made quite a number of changes
+ * @author Tsukasa Hamano - coursecreator and group attribute mapping
+ * @author Matt Clarkson - forked as igovt plugin
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package auth/saml
+ *
+ * Authentication Plugin: Authentication plugin for New Zealands igovt logon service
+ *
+**/
+
+    global $CFG;
+
+    // Set to defaults if undefined
+    if (!isset ($config->dologout)) {
+        $config->dologout = '';
+    }
+    if (!isset ($config->newflt)) {
+        $config->newflt = 'createuser';
+    }
+    if (!isset ($config->duallogin)) {
+        $config->duallogin = '';
+    }
+    if (!isset ($config->autoinvite)) {
+        $config->autoinvite = '';
+    }
+    if (!isset ($config->inviteexpiry)) {
+        $config->inviteexpiry = 0;
+    }
+    if (!isset ($config->inviteexpirynotify)) {
+        $config->inviteexpirynotify = '';
+    }
+    if (!isset ($config->invitemaxtries)) {
+        $config->invitemaxtries = 0;
+    }
+    if (!isset ($config->logonfailurenotify)) {
+        $config->logonfailurenotify = '';
+    }
+
+    $sql = "SELECT COUNT(*)
+            FROM {$CFG->prefix}user u
+            LEFT JOIN {$CFG->prefix}auth_igovt_invitations i ON u.id = i.userid
+            WHERE i.id IS NULL AND u.auth = 'igovt' AND u.deleted = 0";
+
+    $invitecount = get_record_sql($sql);
+
+?>
+<table cellspacing="0" cellpadding="5" border="0">
+<tr valign="top" class="required">
+<td colspan="3">
+   <?php
+   if (isset($err['samllib'])) {
+      formerr($err['samllib']);
+      echo '<br/>';
+   }
+   if (isset($err['samlconfig'])) {
+      formerr($err['samlconfig']);
+      echo '<br/>';
+   }
+   ?>
+</td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string("dologout", "auth_igovt"); ?>:</td>
+    <td>
+        <input name="dologout" type="checkbox" <?php if($config->dologout) echo 'checked="true"'; ?> />
+    </td>
+    <td><?php print_string("dologout_description", "auth_igovt"); ?></td>
+</tr>
+
+<tr valign="top">
+    <td align="right"><?php print_string("newflt", "auth_igovt"); ?>:</td>
+    <td>
+        <select name="newflt">
+            <option value="createuser" <?php if ($config->newflt == 'createuser') echo 'selected="selected"';?>><?php print_string('createuser', 'auth_igovt') ?></option>
+            <option value="requireaccesscode" <?php if ($config->newflt == 'requireaccesscode') echo 'selected="selected"';?>><?php print_string('requireaccesscode','auth_igovt'); ?></option>
+        </select>
+    </td>
+    <td><?php print_string("newflt_description", "auth_igovt"); ?></td>
+</tr>
+
+<tr valign="top">
+    <td align="right"><?php print_string("duallogin", "auth_igovt"); ?>:</td>
+    <td>
+        <input name="duallogin" type="checkbox" <?php if($config->duallogin) echo 'checked="true"'; ?> />
+    </td>
+    <td><?php print_string("duallogin_description", "auth_igovt"); ?></td>
+</tr>
+
+<tr valign="top">
+    <td align="right"><?php print_string("autoinvite", "auth_igovt"); ?>:</td>
+    <td>
+        <input name="autoinvite" type="checkbox" <?php if($config->autoinvite) echo 'checked="true"'; ?> />
+    </td>
+    <td><?php print_string("autoinvite_description", "auth_igovt", $invitecount); ?></td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string("inviteexpiry", "auth_igovt"); ?>:</td>
+    <td>
+        <input name="inviteexpiry" type="text" value="<?php echo $config->inviteexpiry; ?>" size="3" />
+    </td>
+    <td><?php print_string("inviteexpiry_description", "auth_igovt"); ?></td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string("inviteexpirynotify", "auth_igovt"); ?>:</td>
+    <td>
+        <input name="inviteexpirynotify" type="text" value="<?php echo $config->inviteexpirynotify; ?>" />
+    </td>
+    <td><?php print_string("inviteexpirynotify_description", "auth_igovt"); ?></td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string("invitemaxtries", "auth_igovt"); ?>:</td>
+    <td>
+        <input name="invitemaxtries" type="text" value="<?php echo $config->invitemaxtries; ?>" size="3" />
+    </td>
+    <td><?php print_string("invitemaxtries_description", "auth_igovt"); ?></td>
+</tr>
+<tr valign="top">
+    <td align="right"><?php print_string("logonfailurenotify", "auth_igovt"); ?>:</td>
+    <td>
+        <input name="logonfailurenotify" type="text" value="<?php echo $config->logonfailurenotify; ?>" />
+    </td>
+    <td><?php print_string("logonfailurenotify_description", "auth_igovt"); ?></td>
+</tr>
+
+<?php
+print_auth_lock_options('igovt', $user_fields, get_string('auth_fieldlocks_help', 'auth'), false, false);
+?>
+</table>
+
+
