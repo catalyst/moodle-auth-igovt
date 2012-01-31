@@ -1,4 +1,4 @@
-Moodle igovt authentication plugin
+Moodle 1.9 igovt authentication plugin
 ======================================
 
 This plugin is a fork of auth/saml that allows a user to authenticate with the New Zealand igovt logon service.
